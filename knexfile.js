@@ -1,9 +1,7 @@
-require('dotenv').config();
+require("dotenv").config();
 const path = require("path");
 
-const {
-  DATABASE_URL = "postgresql://postgres@localhost/postgres",
-} = process.env;
+const { DATABASE_URL = "postgresql://postgres@localhost/postgres", DEBUG } = process.env;
 
 module.exports = {
   development: {
@@ -17,4 +15,5 @@ module.exports = {
       directory: path.join(__dirname, "src", "db", "seeds"),
     },
     debug: !!DEBUG,
-  }
+  },
+};
