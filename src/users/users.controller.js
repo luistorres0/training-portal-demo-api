@@ -2,12 +2,12 @@ const bcrypt = require("bcrypt");
 const service = require("./users.service");
 
 async function create(req, res, next) {
-  const { username, password } = req.body.data;
+  const { email, password } = req.body.data;
   try {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = { username, password: hashedPassword };
-    const data = await service.create(newUser);
+    const newUser = { email, password: hashedPassword };
+    await service.create(newUser);
     res.status(201).send();
   } catch {
     res.status(500).json({ message: "Error: Failed to create user" });
@@ -15,12 +15,12 @@ async function create(req, res, next) {
 }
 
 async function authenticate(req, res, next) {
-  const { username, password } = req.body.data;
+  const { email, password } = req.body.data;
 
-  const foundUser = await service.getUserByName(username);
+  const foundUser = await service.getUserByName(email);
 
   if (!foundUser) {
-    res.status(400).json({ message: "Error: User not found" });
+    return res.status(400).json({ message: "Error: User not found" });
   }
 
   try {

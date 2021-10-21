@@ -6,8 +6,8 @@ function create(user) {
     .then((users) => users[0]);
 }
 
-function getUserByName(username) {
-  return knex("users").where({ username }, "*").first();
+function getUserByName(email) {
+  return knex("users").where({ email }, "*").first();
 }
 
 module.exports = {
